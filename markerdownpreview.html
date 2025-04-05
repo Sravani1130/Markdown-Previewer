@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Previewer</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; background-color:greenyellow; }
+        .container { display: flex; width: 80%; max-width: 1000px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        textarea#editor, #preview { flex: 1; padding: 20px; border: 1px solid #ccc; box-sizing: border-box; font-family: monospace; font-size: 16px; }
+        textarea#editor { border-right: none; height: 500px; resize: vertical; }
+        #preview { background-color: powderblue; overflow-y: auto; line-height: 1.6; }
+        h1 { border-bottom: 2px solid #eee; padding-bottom: 0.5em; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 0.3em; }
+        a { color:white; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        code { background-color: pink; color: #c7254e; padding: 2px 4px; border-radius: 2px; font-size: 0.9em; }
+        pre { background-color: grey; padding: 10px; overflow-x: auto; border-radius: 3px; }
+        blockquote { border-left: 5px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px; font-style: italic; }
+        img { max-width: 100%; height: auto; }
+        strong, b { font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 0.5em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <textarea id="editor"></textarea>
+        <div id="preview"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.0/marked.min.js"></script>
+    <div class="container">
+    <script>
+        const editor = document.getElementById('editor');
+        const preview = document.getElementById('preview');
+        const defaultMarkdown = `# Welcome to my React Markdown Previewer!
+
+## This is a sub-heading...
+### And here's some other cool stuff:
+
+Heres some code, \`<div>inline code</div>\`, between two backticks.
+
+\`\`\`
+// this is a multi-line code block:
+
+function anotherExample(firstLine, lastLine = 0) {
+  if (firstLine == '\`\`\`' && lastLine == '\`\`\`') {
+    return multiLineCode;
+  }
+}
+\`\`\`
+
+You can also make text **bold**... whoa!
+Or _italic_.
+Or... wait for it... **_both!_**
+And feel free to go crazy ~~crossing stuff out~~.
+
+There's also [links](https://www.freecodecamp.org), and
+> Block Quotes!
+
+And if you want to get really crazy, even tables:
+
+Wild Header | Crazy Header | Another Header?
+------------ | ------------- | -------------
+Your content can | go here, and it | can be quite neat too.
+And what about | these? | Wow!
+
+- And of course there are lists.
+  - Some are bulleted.
+     - With different indentation levels.
+        - That look like this.
+
+
+1. And there are numbered lists too.
+1. Use just one number but the list goes on...
+1. ...like so.
+
+![freeCodeCamp Logo](https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg)
+`;
+
+        editor.value = defaultMarkdown;
+        preview.innerHTML = marked.parse(defaultMarkdown);
+
+        editor.addEventListener('input', function() {
+            preview.innerHTML = marked.parse(editor.value);
+        });
+    </script>
+    </div>
+
+</body>
+</html>
